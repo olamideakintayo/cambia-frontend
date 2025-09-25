@@ -82,10 +82,10 @@ export function useOrders(
         })
       }
 
-      if (response.success && response.data) {
-        setOrders((prev) => [...prev, ...response.data.orders])
-        setPagination(response.data.pagination)
-      }
+        if (response.success && response.data) {
+            setOrders((prev) => [...prev, ...(response.data?.orders ?? [])])
+            setPagination(response.data?.pagination ?? null)
+        }
     } catch (err: any) {
       toast({
         title: "Failed to load more orders",

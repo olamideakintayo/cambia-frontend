@@ -61,10 +61,11 @@ export function useProducts(initialParams: ProductSearchParams = {}): UseProduct
         page: nextPage,
       })
 
-      if (response.success && response.data) {
-        setProducts((prev) => [...prev, ...response.data.products])
-        setPagination(response.data.pagination)
-      }
+        if (response.success && response.data) {
+            setProducts((prev) => [...prev, ...(response.data?.products ?? [])])
+            setPagination(response.data?.pagination ?? null)
+        }
+
     } catch (err: any) {
       toast({
         title: "Failed to load more products",

@@ -62,6 +62,8 @@ export function VendorRegistrationForm() {
     businessType: "",
     description: "",
     address: {
+        firstName: "",
+        lastName: "",
       street: "",
       city: "",
       state: "",
