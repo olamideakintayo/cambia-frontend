@@ -36,6 +36,16 @@ const mockOrders = [
     estimatedRelease: "Dec 29, 2024",
     image: "/suya-spice-mix.jpg",
   },
+    {
+        id: "ORD-003",
+        product: "Premium Suya Spice Mix",
+        vendor: "Northern Spices Co.",
+        amount: 3500,
+        status: "released" as const,
+        orderDate: "Dec 22, 2024",
+        estimatedRelease: "Dec 29, 2024",
+        image: "/suya-spice-mix.jpg",
+    },
 ]
 
 export default function OrdersPage() {
