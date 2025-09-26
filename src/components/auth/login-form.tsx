@@ -11,6 +11,7 @@ import { Checkbox } from "@/components/ui/checkbox"
 import { Eye, EyeOff, Loader2 } from "lucide-react"
 import { useAuth } from "@/hooks/use-auth"
 import Link from "next/link"
+import { redirectByRole }  from "@/utils/redirectByRole"
 
 export function LoginForm() {
     const [formData, setFormData] = useState({
@@ -28,13 +29,14 @@ export function LoginForm() {
         e.preventDefault()
         setIsLoading(true)
 
-        const success = await login(formData)
-        if (success) {
-            router.push("/dashboard")
-        }
-
+        const user = await login(formData)
         setIsLoading(false)
+
+        if (user) {
+            redirectByRole(user.role, router)
+        }
     }
+
 
     return (
         <Card className="w-full max-w-md mx-auto">

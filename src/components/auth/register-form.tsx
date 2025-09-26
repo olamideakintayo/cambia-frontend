@@ -10,6 +10,7 @@ import { Label } from "@/components/ui/label"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Checkbox } from "@/components/ui/checkbox"
 import { Eye, EyeOff, Loader2 } from "lucide-react"
+import { redirectByRole } from "@/utils/redirectByRole"
 import { useAuth } from "@/hooks/use-auth"
 import Link from "next/link"
 import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from "@/components/ui/select"
@@ -65,25 +66,11 @@ export function RegisterForm() {
         const success = await register(registerData)
 
         if (success) {
-            // redirect by role
-            switch (registerData.role) {
-                case "SENDER":
-                    router.push("/dashboard/sender")
-                    break
-                case "VENDOR":
-                    router.push("/dashboard/vendor")
-                    break
-                case "SHIPPING_PARTNER":
-                    router.push("/dashboard/shipping")
-                    break
-                default:
-                    router.push("/dashboard")
-            }
+            redirectByRole(registerData.role, router)
         }
 
         setIsLoading(false)
     }
-
 
     return (
         <Card className="w-full max-w-md mx-auto">
