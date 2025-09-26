@@ -65,11 +65,25 @@ export function RegisterForm() {
         const success = await register(registerData)
 
         if (success) {
-            router.push("/dashboard")
+            // redirect by role
+            switch (registerData.role) {
+                case "SENDER":
+                    router.push("/dashboard/sender")
+                    break
+                case "VENDOR":
+                    router.push("/dashboard/vendor")
+                    break
+                case "SHIPPING_PARTNER":
+                    router.push("/dashboard/shipping")
+                    break
+                default:
+                    router.push("/dashboard")
+            }
         }
 
         setIsLoading(false)
     }
+
 
     return (
         <Card className="w-full max-w-md mx-auto">

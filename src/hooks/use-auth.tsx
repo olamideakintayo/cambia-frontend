@@ -1,9 +1,9 @@
+// hooks/use-auth.ts
 "use client"
 
-import { useState } from "react"
-import { useRouter } from "next/navigation"
+import { useState, useEffect } from "react"
 
-export type UserRole = "CUSTOMER" | "VENDOR" | "SHIPPING_PARTNER"
+export type UserRole = "SENDER" | "VENDOR" | "SHIPPING_PARTNER"
 
 export type RegisterRequest = {
     email: string
@@ -16,45 +16,43 @@ export type RegisterRequest = {
     role: UserRole
 }
 
+export type User = {
+    email: string
+    firstName: string
+    lastName: string
+    walletAddress: string
+    phone?: string
+    address?: string
+    role: UserRole
+}
+
 export function useAuth() {
+    const [user, setUser] = useState<User | null>(null)
     const [error, setError] = useState<string | null>(null)
-    const router = useRouter()
 
-    // Role-based redirect
-    const redirectToDashboard = (role: UserRole) => {
-        switch (role) {
-            case "CUSTOMER":
-                router.push("/dashboard/customer")
-                break
-            case "VENDOR":
-                router.push("/dashboard/vendor")
-                break
-            case "SHIPPING_PARTNER":
-                router.push("/dashboard/shipping")
-                break
-        }
-    }
+    useEffect(() => {
+        const stored = localStorage.getItem("user")
+        if (stored) setUser(JSON.parse(stored))
+    }, [])
 
-    // Login
-    const login = async (formData: { email: string; password: string }) => {
+    const login = async (formData: { email: string; password: string; remember: boolean }) => {
         try {
             const res = await fetch("http://localhost:3000/api/auth/login", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(formData),
             })
-
             if (!res.ok) throw new Error("Invalid credentials")
             const data = await res.json()
-            redirectToDashboard(data.user.role)
-            return true
+            setUser(data.user)
+            localStorage.setItem("user", JSON.stringify(data.user))
+            return data.user
         } catch (err: any) {
             setError(err.message || "Login failed")
-            return false
+            return null
         }
     }
 
-    // Register
     const register = async (formData: RegisterRequest) => {
         try {
             const res = await fetch("http://localhost:3000/api/auth/register", {
@@ -62,16 +60,21 @@ export function useAuth() {
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(formData),
             })
-
             if (!res.ok) throw new Error("Registration failed")
             const data = await res.json()
-            redirectToDashboard(data.user.role)
-            return true
+            setUser(data.user)
+            localStorage.setItem("user", JSON.stringify(data.user))
+            return data.user
         } catch (err: any) {
             setError(err.message || "Registration failed")
-            return false
+            return null
         }
     }
 
-    return { login, register, error }
+    const logout = () => {
+        setUser(null)
+        localStorage.removeItem("user")
+    }
+
+    return { user, login, register, logout, error }
 }
