@@ -91,7 +91,7 @@ export function LoginForm() {
         <TabsContent value="register">
           <CardHeader>
             <CardTitle>Create Account</CardTitle>
-            <CardDescription>Join DiasporaFood and start ordering authentic Nigerian food</CardDescription>
+            <CardDescription>Join Cambia and start ordering authentic Nigerian food</CardDescription>
           </CardHeader>
           <form onSubmit={handleRegisterSubmit}>
             <CardContent className="space-y-4">
