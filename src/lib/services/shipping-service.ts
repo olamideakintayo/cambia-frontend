@@ -141,7 +141,7 @@ class ShippingService {
       )
   }
 
-  // Update shipping address
+
   async updateShippingAddress(addressId: string, address: Address): Promise<ApiResponse<Address>> {
     return apiClient.put<Address>(API_CONFIG.ENDPOINTS.SHIPPING.UPDATE_ADDRESS, address, {
       params: { addressId },
