@@ -1,5 +1,11 @@
 import { API_CONFIG, buildUrl } from "./api-config"
 
+import {OrderListParams} from "@/lib/services/order-service";
+import {toQueryParams} from "@/lib/query-utils";
+
+import {ProductSearchParams} from "@/lib/services/product-service";
+
+
 export interface ApiResponse<T = any> {
   success: boolean
   data?: T
@@ -141,15 +147,16 @@ class ApiClient {
   }
 
   // HTTP Methods
-  async get<T>(
-    endpoint: string,
-    params?: Record<string, string | number>,
-    headers?: Record<string, string>,
-  ): Promise<ApiResponse<T>> {
-    return this.request<T>("GET", endpoint, { params, headers })
-  }
+    async get<T>(
+        endpoint: string,
+        params?: OrderListParams,
+        headers?: Record<string, string>,
+    ): Promise<ApiResponse<T>> {
+        return this.request<T>("GET", endpoint, { params: toQueryParams(params), headers })
+    }
 
-  async post<T>(
+
+    async post<T>(
     endpoint: string,
     data?: any,
     options?: { params?: Record<string, string | number>; headers?: Record<string, string> },
@@ -216,5 +223,3 @@ class ApiClient {
 // Export singleton instance
 export const apiClient = new ApiClient()
 
-// Export types
-export type { ApiResponse, ApiError }

@@ -56,9 +56,10 @@ class OrderService {
   }
 
   // Get order by ID
-  async getOrder(orderId: string): Promise<ApiResponse<Order>> {
-    return apiClient.get<Order>(API_CONFIG.ENDPOINTS.ORDERS.GET, { id: orderId })
-  }
+    async getOrder(orderId: string): Promise<ApiResponse<Order>> {
+        return apiClient.get<Order>(`${API_CONFIG.ENDPOINTS.ORDERS.GET}/${orderId}`)
+    }
+
 
   // Update order status
   async updateOrderStatus(orderId: string, data: OrderUpdateRequest): Promise<ApiResponse<Order>> {
@@ -91,7 +92,7 @@ class OrderService {
 
   // Get order tracking information
   async getOrderTracking(orderId: string): Promise<ApiResponse<OrderTrackingResponse>> {
-    return apiClient.get<OrderTrackingResponse>(API_CONFIG.ENDPOINTS.ORDERS.TRACKING, { id: orderId })
+    return apiClient.get<OrderTrackingResponse>(`${API_CONFIG.ENDPOINTS.ORDERS.TRACKING}/${orderId}`)
   }
 
   // Confirm order (vendor action)

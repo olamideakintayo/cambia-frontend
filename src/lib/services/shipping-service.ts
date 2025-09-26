@@ -136,7 +136,9 @@ class ShippingService {
       currentLocation?: string
     }>
   > {
-    return apiClient.get(API_CONFIG.ENDPOINTS.SHIPPING.TRACK_SHIPMENT, { trackingNumber })
+      return apiClient.get(
+          `${API_CONFIG.ENDPOINTS.SHIPPING.TRACK_SHIPMENT}?trackingNumber=${trackingNumber}`
+      )
   }
 
   // Update shipping address
