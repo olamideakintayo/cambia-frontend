@@ -1,8 +1,9 @@
 "use client"
 
 import { useState } from "react"
+import { useRouter } from "next/navigation"
 
-export type UserRole = "SENDER" | "VENDOR" | "SHIPPING_PARTNER"
+export type UserRole = "CUSTOMER" | "VENDOR" | "SHIPPING_PARTNER"
 
 export type RegisterRequest = {
     email: string
@@ -17,9 +18,25 @@ export type RegisterRequest = {
 
 export function useAuth() {
     const [error, setError] = useState<string | null>(null)
+    const router = useRouter()
+
+    // Role-based redirect
+    const redirectToDashboard = (role: UserRole) => {
+        switch (role) {
+            case "CUSTOMER":
+                router.push("/dashboard/customer")
+                break
+            case "VENDOR":
+                router.push("/dashboard/vendor")
+                break
+            case "SHIPPING_PARTNER":
+                router.push("/dashboard/shipping")
+                break
+        }
+    }
 
     // Login
-    const login = async (formData: { email: string; password: string; remember: boolean }) => {
+    const login = async (formData: { email: string; password: string }) => {
         try {
             const res = await fetch("http://localhost:3000/api/auth/login", {
                 method: "POST",
@@ -28,7 +45,8 @@ export function useAuth() {
             })
 
             if (!res.ok) throw new Error("Invalid credentials")
-            await res.json()
+            const data = await res.json()
+            redirectToDashboard(data.user.role)
             return true
         } catch (err: any) {
             setError(err.message || "Login failed")
@@ -46,7 +64,8 @@ export function useAuth() {
             })
 
             if (!res.ok) throw new Error("Registration failed")
-            await res.json()
+            const data = await res.json()
+            redirectToDashboard(data.user.role)
             return true
         } catch (err: any) {
             setError(err.message || "Registration failed")
