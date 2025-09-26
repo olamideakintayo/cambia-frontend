@@ -1,205 +1,58 @@
 "use client"
 
-import type React from "react"
+import { useState } from "react"
 
-import { useState, useEffect, useCallback, createContext, useContext } from "react"
-import { authService } from "@/lib/services/auth-service"
-import type { User, LoginRequest, RegisterRequest } from "@/lib/api-types"
-import { useToast } from "./use-toast"
+export type UserRole = "SENDER" | "VENDOR" | "SHIPPING_PARTNER"
 
-interface AuthContextType {
-  user: User | null
-  isLoading: boolean
-  isAuthenticated: boolean
-  login: (credentials: LoginRequest) => Promise<boolean>
-  register: (userData: RegisterRequest) => Promise<boolean>
-  logout: () => Promise<void>
-  updateProfile: (data: any) => Promise<boolean>
-  refreshUser: () => Promise<void>
+export type RegisterRequest = {
+    email: string
+    firstName: string
+    lastName: string
+    password: string
+    walletAddress: string
+    phone?: string
+    address?: string
+    role: UserRole
 }
 
-const AuthContext = createContext<AuthContextType | undefined>(undefined)
+export function useAuth() {
+    const [error, setError] = useState<string | null>(null)
 
-export function AuthProvider({ children }: { children: React.ReactNode }) {
-  const [user, setUser] = useState<User | null>(null)
-  const [isLoading, setIsLoading] = useState(true)
-  const { toast } = useToast()
-
-  const isAuthenticated = !!user && authService.isAuthenticated()
-
-  // Load user on mount
-  useEffect(() => {
-    const loadUser = async () => {
-      if (authService.isAuthenticated()) {
+    // Login
+    const login = async (formData: { email: string; password: string; remember: boolean }) => {
         try {
-          const response = await authService.getProfile()
-          if (response.success && response.data) {
-            setUser(response.data)
-          } else {
-            // Token might be invalid, remove it
-            authService.removeAuthToken()
-          }
-        } catch (error) {
-          console.error("Failed to load user:", error)
-          authService.removeAuthToken()
+            const res = await fetch("http://localhost:3000/api/auth/login", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(formData),
+            })
+
+            if (!res.ok) throw new Error("Invalid credentials")
+            await res.json()
+            return true
+        } catch (err: any) {
+            setError(err.message || "Login failed")
+            return false
         }
-      }
-      setIsLoading(false)
     }
 
-    loadUser()
-  }, [])
+    // Register
+    const register = async (formData: RegisterRequest) => {
+        try {
+            const res = await fetch("http://localhost:3000/api/auth/register", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(formData),
+            })
 
-  const login = useCallback(
-    async (credentials: LoginRequest): Promise<boolean> => {
-      try {
-        setIsLoading(true)
-        const response = await authService.login(credentials)
-
-        if (response.success && response.data) {
-          setUser(response.data.user)
-          toast({
-            title: "Welcome back!",
-            description: "You have been successfully logged in.",
-          })
-          return true
-        } else {
-          toast({
-            title: "Login failed",
-            description: response.message || "Invalid credentials",
-            variant: "destructive",
-          })
-          return false
+            if (!res.ok) throw new Error("Registration failed")
+            await res.json()
+            return true
+        } catch (err: any) {
+            setError(err.message || "Registration failed")
+            return false
         }
-      } catch (error: any) {
-        toast({
-          title: "Login failed",
-          description: error.message || "An error occurred during login",
-          variant: "destructive",
-        })
-        return false
-      } finally {
-        setIsLoading(false)
-      }
-    },
-    [toast],
-  )
-
-  const register = useCallback(
-    async (userData: RegisterRequest): Promise<boolean> => {
-      try {
-        setIsLoading(true)
-        const response = await authService.register(userData)
-
-        if (response.success && response.data) {
-          setUser(response.data.user)
-          toast({
-            title: "Account created!",
-            description: "Welcome to Cambia! Please verify your email address.",
-          })
-          return true
-        } else {
-          toast({
-            title: "Registration failed",
-            description: response.message || "Failed to create account",
-            variant: "destructive",
-          })
-          return false
-        }
-      } catch (error: any) {
-        toast({
-          title: "Registration failed",
-          description: error.message || "An error occurred during registration",
-          variant: "destructive",
-        })
-        return false
-      } finally {
-        setIsLoading(false)
-      }
-    },
-    [toast],
-  )
-
-  const logout = useCallback(async (): Promise<void> => {
-    try {
-      await authService.logout()
-    } catch (error) {
-      console.error("Logout error:", error)
-    } finally {
-      setUser(null)
-      toast({
-        title: "Logged out",
-        description: "You have been successfully logged out.",
-      })
     }
-  }, [toast])
 
-  const updateProfile = useCallback(
-    async (data: any): Promise<boolean> => {
-      try {
-        setIsLoading(true)
-        const response = await authService.updateProfile(data)
-
-        if (response.success && response.data) {
-          setUser(response.data)
-          toast({
-            title: "Profile updated",
-            description: "Your profile has been successfully updated.",
-          })
-          return true
-        } else {
-          toast({
-            title: "Update failed",
-            description: response.message || "Failed to update profile",
-            variant: "destructive",
-          })
-          return false
-        }
-      } catch (error: any) {
-        toast({
-          title: "Update failed",
-          description: error.message || "An error occurred while updating profile",
-          variant: "destructive",
-        })
-        return false
-      } finally {
-        setIsLoading(false)
-      }
-    },
-    [toast],
-  )
-
-  const refreshUser = useCallback(async (): Promise<void> => {
-    if (authService.isAuthenticated()) {
-      try {
-        const response = await authService.getProfile()
-        if (response.success && response.data) {
-          setUser(response.data)
-        }
-      } catch (error) {
-        console.error("Failed to refresh user:", error)
-      }
-    }
-  }, [])
-
-  const value: AuthContextType = {
-    user,
-    isLoading,
-    isAuthenticated,
-    login,
-    register,
-    logout,
-    updateProfile,
-    refreshUser,
-  }
-
-  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>
-}
-
-export function useAuth(): AuthContextType {
-  const context = useContext(AuthContext)
-  if (context === undefined) {
-    throw new Error("useAuth must be used within an AuthProvider")
-  }
-  return context
+    return { login, register, error }
 }
