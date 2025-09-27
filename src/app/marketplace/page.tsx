@@ -25,7 +25,7 @@ export default function MarketplacePage() {
             <div className="flex gap-4">
               <div className="relative flex-1">
                 <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                <Input placeholder="Search for jollof rice, egusi soup, suya..." className="pl-10" />
+                <Input placeholder="Search for Garri, Melon seeds, suya..." className="pl-10" />
               </div>
               <Button variant="outline" className="flex items-center gap-2 bg-transparent">
                 <Filter className="h-4 w-4" />

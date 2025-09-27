@@ -12,7 +12,7 @@ export default function HomePage() {
 
       {/* Hero Section */}
       <section className="relative overflow-hidden py-24 lg:py-32">
-        <div className="container px-4 md:px-6">
+        <div className="container px-8 md:px-12">
           <div className="grid gap-6 lg:grid-cols-[1fr_400px] lg:gap-12 xl:grid-cols-[1fr_600px]">
             <div className="flex flex-col justify-center space-y-4">
               <div className="space-y-2">
@@ -62,7 +62,7 @@ export default function HomePage() {
                       <CardTitle className="text-lg">Order Status</CardTitle>
                       <Badge variant="secondary">Live</Badge>
                     </div>
-                    <CardDescription>Jollof Rice & Plantain</CardDescription>
+                    <CardDescription>Garri, Stock Fish and others</CardDescription>
                   </CardHeader>
                   <CardContent className="space-y-4">
                     <div className="flex items-center justify-between">
@@ -101,10 +101,10 @@ export default function HomePage() {
 
       {/* How It Works */}
       <section className="py-24 lg:py-32 bg-muted/50">
-        <div className="container px-4 md:px-6">
+        <div className="container px-8 md:px-12">
           <div className="flex flex-col items-center justify-center space-y-4 text-center">
             <div className="space-y-2">
-              <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl text-balance">How DiasporaFood Works</h2>
+              <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl text-balance">How Cambia Works</h2>
               <p className="max-w-[900px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed text-pretty">
                 A secure, transparent process that protects both vendors and customers through smart contract escrow
               </p>
@@ -156,7 +156,7 @@ export default function HomePage() {
 
       {/* Features */}
       <section className="py-24 lg:py-32">
-        <div className="container px-4 md:px-6">
+        <div className="container px-8 md:px-12">
           <div className="grid gap-6 lg:grid-cols-2 lg:gap-12">
             <div className="space-y-4">
               <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl text-balance">
@@ -229,12 +229,12 @@ export default function HomePage() {
 
       {/* CTA Section */}
       <section className="py-24 lg:py-32 bg-muted/50">
-        <div className="container px-4 md:px-6">
+        <div className="container px-8 md:px-12">
           <div className="flex flex-col items-center justify-center space-y-4 text-center">
             <div className="space-y-2">
               <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl text-balance">Ready to Get Started?</h2>
               <p className="max-w-[600px] text-muted-foreground md:text-xl text-pretty">
-                Join thousands of satisfied customers and vendors on DiasporaFood
+                Join thousands of satisfied customers and vendors on Cambia
               </p>
             </div>
             <div className="flex flex-col gap-2 min-[400px]:flex-row">
@@ -251,12 +251,12 @@ export default function HomePage() {
 
       {/* Footer */}
       <footer className="border-t py-12">
-        <div className="container px-4 md:px-6">
+        <div className="container px-8 md:px-12">
           <div className="grid gap-8 lg:grid-cols-4">
             <div className="space-y-4">
               <div className="flex items-center space-x-2">
                 <div className="h-8 w-8 rounded-lg bg-primary flex items-center justify-center">
-                  <span className="text-primary-foreground font-bold text-lg">D</span>
+                  <span className="text-primary-foreground font-bold text-lg">C</span>
                 </div>
                 <span className="font-bold text-xl">Cambia</span>
               </div>
