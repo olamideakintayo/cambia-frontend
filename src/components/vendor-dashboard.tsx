@@ -9,25 +9,25 @@ import { Eye, Edit, Trash2, TrendingUp, Clock, CheckCircle } from "lucide-react"
 const mockProducts = [
   {
     id: 1,
-    name: "Authentic Jollof Rice with Chicken",
-    category: "Rice Dishes",
+    name: "Ijebu Garri",
+    category: "Swallow Foods",
     state: "Lagos",
     price: 15000,
     status: "active",
     orders: 23,
     rating: 4.8,
-    image: "/jollof-rice-with-chicken.jpg",
+    image: "/images/garri.jpg",
   },
   {
     id: 2,
-    name: "Homemade Egusi Soup",
+    name: "Melon Seeds",
     category: "Soups & Stews",
     state: "Lagos",
     price: 12000,
     status: "active",
     orders: 18,
     rating: 4.9,
-    image: "/egusi-soup-nigerian.jpg",
+    image: "/images/egusi-melon-seeds.jpg",
   },
   {
     id: 3,
@@ -38,14 +38,14 @@ const mockProducts = [
     status: "draft",
     orders: 0,
     rating: 0,
-    image: "/suya-spice-mix.jpg",
+    image: "images/suya_spice.jpg",
   },
 ]
 
 const recentOrders = [
   {
     id: "ORD-001",
-    product: "Jollof Rice with Chicken",
+    product: "Ijebu Garri",
     customer: "Sarah Johnson",
     location: "London, UK",
     amount: 15000,
@@ -54,11 +54,11 @@ const recentOrders = [
   },
   {
     id: "ORD-002",
-    product: "Egusi Soup",
+    product: "Melon Seeds",
     customer: "Michael Chen",
     location: "Toronto, Canada",
     amount: 12000,
-    status: "preparing",
+    status: "in transit",
     date: "5 hours ago",
   },
   {

@@ -17,7 +17,7 @@ const mockProducts = [
     reviews: 23,
     prepTime: "2-3 days",
     category: "Swallow Foods",
-    image: "/garri",
+    image: "/images/garri.jpg",
     isVerified: true,
   },
   {
@@ -30,7 +30,7 @@ const mockProducts = [
     reviews: 18,
     prepTime: "1-2 days",
     category: "Soups & Stews",
-    image: "/egusi-soup-nigerian.jpg",
+    image: "/images/egusi-melon-seeds.jpg",
     isVerified: true,
   },
   {
@@ -43,7 +43,7 @@ const mockProducts = [
     reviews: 45,
     prepTime: "Same day",
     category: "Spices & Seasonings",
-    image: "/suya-spice-mix.jpg",
+    image: "/images/suya_spice.jpg",
     isVerified: true,
   },
   {
@@ -56,7 +56,7 @@ const mockProducts = [
     reviews: 12,
     prepTime: "2-3 days",
     category: "Swallow Foods",
-    image: "/water-yam.jpg",
+    image: "/images/water-yam.jpg",
     isVerified: false,
   },
   {
@@ -69,12 +69,12 @@ const mockProducts = [
     reviews: 31,
     prepTime: "1-2 days",
     category: "Soups & Stews",
-    image: "/pepper-soup-fish.jpg",
+    image: "/images/stock_fish.jpg",
     isVerified: true,
   },
   {
     id: 6,
-    name: "Beans",
+    name: "Honey Beans",
     vendor: "Morning Glory Kitchen",
     state: "Lagos",
     price: 5000,
@@ -82,7 +82,7 @@ const mockProducts = [
     reviews: 67,
     prepTime: "Same day",
     category: "Legumes & Pulses",
-    image: "/beans.jpg",
+    image: "/images/honey_beans.webp",
     isVerified: true,
   },
 ]
